@@ -1,16 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-<<<<<<< HEAD
-//buhahahahahahahahaha
-
-=======
-
-
-
-
-//aouinbgubiqe
->>>>>>> 8412c9167b5b03cce658e07e2b41fde4723416ca
 public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
