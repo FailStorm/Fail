@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//githubcheck rtiubnwriou
-
 public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
