@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//githubcheck
+//githubcheck rtiubnwriou
 
 public class Player : MonoBehaviour
 {
