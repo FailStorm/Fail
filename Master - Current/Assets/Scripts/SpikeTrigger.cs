@@ -10,18 +10,10 @@ public class SpikeTrigger : MonoBehaviour
 		{
 			if (this.gameObject.name == "SpikeLand")
 			{
-				if (other.rigidbody2D.mass == 10)
-				{
-					other.rigidbody2D.mass = 100;
-					other.rigidbody2D.gravityScale = 15;
-					Player.SetForm(1);
-				}
-				else if (other.rigidbody2D.mass == 100)
-				{
-					other.rigidbody2D.mass = 10;
-					other.rigidbody2D.gravityScale = 15;
-					Player.SetForm(1);
-				}
+				other.rigidbody2D.mass = 200;
+				other.rigidbody2D.gravityScale = 10;
+				other.rigidbody2D.drag = 0;
+				Player.SetForm(1);
 			}
 			else if (this.gameObject.name == "SpikeWater")
 			{

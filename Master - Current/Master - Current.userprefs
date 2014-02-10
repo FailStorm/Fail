@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WaterScripts\PlayerWater.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Player.cs" Line="100" Column="19" />
+      <File FileName="Assets\Scripts\PlayerHub.cs" Line="32" Column="42" />
+      <File FileName="Assets\Scripts\LandScripts\PlayerLand.cs" Line="22" Column="42" />
+      <File FileName="Assets\Scripts\SpikeTrigger.cs" Line="15" Column="27" />
+      <File FileName="Assets\Scripts\WaterScripts\WaterBound.cs" Line="18" Column="41" />
+      <File FileName="Assets\Scripts\WaterScripts\PlayerWater.cs" Line="16" Column="25" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

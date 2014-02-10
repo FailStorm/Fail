@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
 	public static bool swimming = false;
+	public Vector2 PosStart, PosEnd;
 	
 	// Reset the player to his original position
 	public static void Reset(Rigidbody2D body) 
@@ -54,25 +55,36 @@ public class Player : MonoBehaviour
 		default:	// Default to Hub
 			PlayerHub.Move(rigidbody2D, grounded);
 			break;
-		}		
+		}
+
+		//Check the collision using raycasting
+		BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+
+		//Starting position for the first ray
+		PosStart = transform.position;
+		PosStart.x -= boxCollider.size.x * 0.5f;
+		PosStart.y -= boxCollider.size.y * 0.7f;
+
+		//Ending position for the first ray
+		PosEnd = transform.position;
+		PosEnd.x -= boxCollider.size.x * 0.5f;
+		PosEnd.y -= boxCollider.size.y * 0.6f;
+
+		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
+
+		//Position for the second ray
+		PosStart.x += boxCollider.size.x;
+		PosEnd.x += boxCollider.size.x ;
+
+		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
+
+		//Check if the rays collided
+		if (hit.collider || hit2.collider)
+				grounded = true;
+		else
+				grounded = false;
 	}
 
-	void OnCollisionEnter2D(Collision2D obj)
-	{
-		if (obj.gameObject.name == "Floor")
-		{
-			grounded = true;
-		}
-	}
-
-	void OnCollisionExit2D(Collision2D obj)
-	{
-		if (obj.gameObject.name == "Floor")
-		{
-			grounded = false;
-		}
-	}
-	
 	// Change form
 	public static void SetForm(int a) 
 	{
@@ -85,7 +97,7 @@ public class Player : MonoBehaviour
 		return form;
 	}
 	
-	
+	//Set if swimming
 	public static void SetSwimming(bool a) 
 	{
 		swimming = a;
