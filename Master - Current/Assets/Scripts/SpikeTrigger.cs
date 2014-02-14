@@ -18,13 +18,17 @@ public class SpikeTrigger : MonoBehaviour
 			else if (this.gameObject.name == "SpikeWater")
 			{
 				other.rigidbody2D.mass = 10;
-				other.rigidbody2D.gravityScale = 15;
+				other.rigidbody2D.gravityScale = 5;
+				other.rigidbody2D.drag = 2;
+				Player.originalDrag = other.rigidbody2D.drag;
+				Player.originalGravity = other.rigidbody2D.gravityScale;
 				Player.SetForm(2);				
 			}
 			else if (this.gameObject.name == "SpikeAir")
 			{
 				other.rigidbody2D.mass = 10;
-				other.rigidbody2D.gravityScale = 15;
+				other.rigidbody2D.gravityScale = 5;
+				other.rigidbody2D.drag = 2;
 				Player.SetForm(3);				
 			}		
 			Player.Reset(other.rigidbody2D);

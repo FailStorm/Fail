@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 	public bool grounded;
 	public static bool swimming = false;
 	public Vector2 PosStart, PosEnd;
+	public static float originalDrag, originalGravity;
 	
 	// Reset the player to his original position
 	public static void Reset(Rigidbody2D body) 
@@ -83,8 +84,59 @@ public class Player : MonoBehaviour
 				grounded = true;
 		else
 				grounded = false;
-	}
 
+		/*
+		//Starting position for the first ray
+		PosStart = transform.position;
+		PosStart.x -= boxCollider.size.x * 0.6f;
+		PosStart.y -= boxCollider.size.y;
+		
+		//Ending position for the first ray
+		PosEnd = transform.position;
+		PosEnd.x -= boxCollider.size.x * 0.7f;
+		PosEnd.y -= boxCollider.size.y;
+		
+		hit = Physics2D.Linecast(PosStart, PosEnd);
+		
+		//Position for the second ray
+		PosStart.x += boxCollider.size.x;
+		PosEnd.x += boxCollider.size.x ;
+		
+		hit2 = Physics2D.Linecast(PosStart, PosEnd);
+		
+		//Check if the rays collided
+		if (hit.collider || hit2.collider) 
+		{
+			originalDrag = rigidbody2D.drag;
+			rigidbody2D.drag = 0;
+		}
+		else
+		{
+			rigidbody2D.drag = originalDrag;
+		}*/
+	}
+	/*
+	void OnCollisionStay2D(Collision2D obj)
+	{
+		if (!grounded) 
+		{
+			originalDrag = rigidbody2D.drag;
+			rigidbody2D.drag = 0;
+		} 
+		else
+		{
+			rigidbody2D.drag = originalDrag;
+		}
+	}*/
+	/*
+	void OnCollisionExit2D(Collision2D obj)
+	{
+		if (!grounded) 
+		{
+
+		}
+	}
+*/
 	// Change form
 	public static void SetForm(int a) 
 	{
