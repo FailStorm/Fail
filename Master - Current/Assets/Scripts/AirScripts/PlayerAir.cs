@@ -3,35 +3,39 @@ using System.Collections;
 
 public class PlayerAir : MonoBehaviour
 {
-	private static float xSpeed = 70;
-	private static float ySpeed = 30;
+	private static float xSpeed = 70000;
+	private static float ySpeed = 30000;
 	
 	// Handles movement
 	public static void Move (Rigidbody2D body, bool grounded)
 	{
 		Vector2 movement;
-		movement.x = Input.GetAxisRaw ("Horizontal") * xSpeed * 500 * Time.deltaTime;
+		movement.x = Input.GetAxisRaw ("Horizontal") * xSpeed * Time.deltaTime;
 		movement.y = 0;
 		
 		// Jumping
-		// If jump is pressed and the player is not falling / rising...
-		if (Input.GetButtonDown ("Jump"))
+		if (grounded) // If jump is pressed and the player is not falling / rising...
 		{
-			movement.y = ySpeed * 500;
-		}
-
-		if (!Player.swimming)
-			//Gliding
-			if (!grounded)
+			if (Input.GetButtonDown ("Jump"))
 			{
-				//body.drag = 2;
-				
-				if(body.velocity.y <= -3 && Input.GetButton ("Jump"))
-				{
-					//body.drag = 5;
-					body.AddForce(new Vector2(0, 500));
-				}
+				movement.y = ySpeed;
 			}
+		}
+		else
+		{
+			if (Input.GetButtonDown ("Jump"))
+			{
+				movement.y = ySpeed / 2;
+			}
+			
+			body.drag = 2;
+			
+			if(body.velocity.y <= -3 && Input.GetButton ("Jump"))
+			{
+				body.drag = 6;
+				body.AddForce(new Vector2(0, 500));
+			}
+		}
 		
 		// Add forces		
 		if (movement.x != 0 && body.velocity.x <= 20 && body.velocity.x >= -20)

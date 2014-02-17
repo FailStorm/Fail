@@ -17,10 +17,10 @@ public class PlayerWater : MonoBehaviour {
 	public static void Move(Rigidbody2D body)
 	{		
 		if (Input.GetButtonDown ("Jump")) 
-			waterSpeed = 700;
+			waterSpeed = 200000;
 		else
-			waterSpeed = 30;
+			waterSpeed = 10000;
 
-		body.AddForce (new Vector2(Input.GetAxisRaw ("Horizontal") * waterSpeed * 500 * Time.deltaTime, Input.GetAxisRaw("Vertical") * waterSpeed * 500 * Time.deltaTime));
+		body.AddForce (new Vector2(Input.GetAxisRaw ("Horizontal") * waterSpeed * Time.deltaTime, Input.GetAxisRaw("Vertical") * waterSpeed* Time.deltaTime));
 	}	
 }
