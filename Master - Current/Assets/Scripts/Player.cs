@@ -63,19 +63,19 @@ public class Player : MonoBehaviour
 		
 		//Starting position for the first ray
 		PosStart = transform.position;
-		PosStart.x -= boxCollider.size.x * 0.5f;
-		PosStart.y -= boxCollider.size.y * 0.7f;
+		PosStart.x -= boxCollider.size.x * 2.5f;
+		PosStart.y -= boxCollider.size.y * 2.3f;
 		
 		//Ending position for the first ray
 		PosEnd = transform.position;
-		PosEnd.x -= boxCollider.size.x * 0.5f;
-		PosEnd.y -= boxCollider.size.y * 0.6f;
+		PosEnd.x -= boxCollider.size.x * 2.5f;
+		PosEnd.y -= boxCollider.size.y * 1.3f;
 		
 		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
 		
 		//Position for the second ray
-		PosStart.x += boxCollider.size.x;
-		PosEnd.x += boxCollider.size.x ;
+		PosStart.x += boxCollider.size.x * 3.5f;
+		PosEnd.x += boxCollider.size.x * 3.5f;
 		
 		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
 
