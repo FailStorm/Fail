@@ -61,29 +61,47 @@ public class Player : MonoBehaviour
 		//Check the collision using raycasting
 		BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
 		
-		//Starting position for the first ray
 		PosStart = transform.position;
-		PosStart.x -= boxCollider.size.x * 2.5f;
-		PosStart.y -= boxCollider.size.y * 2.3f;
-		
-		//Ending position for the first ray
 		PosEnd = transform.position;
-		PosEnd.x -= boxCollider.size.x * 2.5f;
+		PosStart.y -= boxCollider.size.y * 1.5f;
 		PosEnd.y -= boxCollider.size.y * 1.3f;
 		
 		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
 		
-		//Position for the second ray
-		PosStart.x += boxCollider.size.x * 3.5f;
-		PosEnd.x += boxCollider.size.x * 3.5f;
+		PosStart.x -= boxCollider.size.x;
+		PosEnd.x -= boxCollider.size.x;
 		
 		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
+		
+		//Position for the second ray
+		PosStart.x += boxCollider.size.x * 2;
+		PosEnd.x += boxCollider.size.x * 2;
+		
+		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd);
 
 		//Check if the rays collided
-		if (hit.collider || hit2.collider)
+		if (hit.collider || hit2.collider || hit3.collider)
 			grounded = true;
 		else
 			grounded = false;
+
+		if (hit.collider)
+		{
+			if (hit.collider.gameObject.layer == 9)
+				Physics2D.IgnoreLayerCollision(10, 9, false);
+		}
+		else if (hit2.collider)
+		{
+			if (hit2.collider.gameObject.layer == 9)
+				Physics2D.IgnoreLayerCollision(10, 9, false);		
+		}
+		else if (hit3.collider)
+		{
+			if (hit3.collider.gameObject.layer == 9)
+				Physics2D.IgnoreLayerCollision(10, 9, false);		
+		}
+		else
+			Physics2D.IgnoreLayerCollision(10, 9, true);
 	
 	}
 
