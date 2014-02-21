@@ -63,25 +63,28 @@ public class Player : MonoBehaviour
 		
 		PosStart = transform.position;
 		PosEnd = transform.position;
-		PosStart.y -= boxCollider.size.y * 1.5f;
-		PosEnd.y -= boxCollider.size.y * 1.3f;
+		PosStart.y -= boxCollider.size.y * transform.localScale.y * 0.8f;
+		PosEnd.y -= boxCollider.size.y * transform.localScale.y * 0.55f;
 		
 		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
 		
-		PosStart.x -= boxCollider.size.x;
-		PosEnd.x -= boxCollider.size.x;
+		PosStart.x -= boxCollider.size.x * transform.localScale.x;
+		PosEnd.x -= boxCollider.size.x * transform.localScale.x;
 		
 		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
 		
 		//Position for the second ray
-		PosStart.x += boxCollider.size.x * 2;
-		PosEnd.x += boxCollider.size.x * 2;
+		PosStart.x += boxCollider.size.x * transform.localScale.x * 2;
+		PosEnd.x += boxCollider.size.x * transform.localScale.x * 2;
 		
 		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd);
 
 		//Check if the rays collided
 		if (hit.collider || hit2.collider || hit3.collider)
+		{
 			grounded = true;
+			Debug.Log(hit3.collider.name);
+		}
 		else
 			grounded = false;
 
