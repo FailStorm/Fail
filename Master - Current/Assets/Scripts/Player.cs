@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
-	{
+	{	
+		bool collision = false;
 		// Update based on which state the player is in
 		// (Currently only handles movement)
 		switch (form)
@@ -58,6 +59,8 @@ public class Player : MonoBehaviour
 			break;
 		}		
 
+		grounded = false;
+		
 		//Check the collision using raycasting
 		BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
 		
@@ -67,42 +70,61 @@ public class Player : MonoBehaviour
 		PosEnd.y -= boxCollider.size.y * transform.localScale.y * 0.55f;
 		
 		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
+		Debug.DrawLine (PosStart, PosEnd, Color.red);
 		
-		PosStart.x -= boxCollider.size.x * transform.localScale.x;
-		PosEnd.x -= boxCollider.size.x * transform.localScale.x;
-		
-		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
-		
-		//Position for the second ray
-		PosStart.x += boxCollider.size.x * transform.localScale.x * 2;
-		PosEnd.x += boxCollider.size.x * transform.localScale.x * 2;
-		
-		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd);
-
-		//Check if the rays collided
-		if (hit.collider || hit2.collider || hit3.collider)
-		{
-			grounded = true;
-			Debug.Log(hit3.collider.name);
-		}
-		else
-			grounded = false;
-
 		if (hit.collider)
 		{
 			if (hit.collider.gameObject.layer == 9)
-				Physics2D.IgnoreLayerCollision(10, 9, false);
+				collision = true;
+				
+			grounded = true;
 		}
-		else if (hit2.collider)
+		
+		PosStart.x -= boxCollider.size.x * transform.localScale.x * 0.5f;
+		PosEnd.x -= boxCollider.size.x * transform.localScale.x * 0.5f;
+		
+		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
+		Debug.DrawLine (PosStart, PosEnd, Color.red);
+
+		if (hit2.collider)
 		{
 			if (hit2.collider.gameObject.layer == 9)
-				Physics2D.IgnoreLayerCollision(10, 9, false);		
+				collision = true;
+				
+			grounded = true;
 		}
-		else if (hit3.collider)
+		
+		//Position for the second ray
+		PosStart.x += boxCollider.size.x * transform.localScale.x;
+		PosEnd.x += boxCollider.size.x * transform.localScale.x;
+		
+		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd);
+		Debug.DrawLine (PosStart, PosEnd, Color.red);
+
+		if (hit3.collider)
 		{
 			if (hit3.collider.gameObject.layer == 9)
-				Physics2D.IgnoreLayerCollision(10, 9, false);		
+				collision = true;
+				
+			grounded = true;
 		}
+		/*
+		//Check if the rays collided
+		if (hit.collider)
+		{
+					
+		}
+		if (hit2.collider)
+		{
+			grounded = true;			
+		}
+		if (hit3.collider)
+		{
+			grounded = true;		
+		}
+			*/
+		if(collision)
+			Physics2D.IgnoreLayerCollision(10, 9, false);
 		else
 			Physics2D.IgnoreLayerCollision(10, 9, true);
 	
