@@ -17,6 +17,7 @@ public class Menu : MonoBehaviour {
 		if (GUILayout.Button ("", PlayStyle)) 
 		{
 			Application.LoadLevel(1);
+			Time.timeScale = 1;
 		}
 		GUILayout.EndArea ();
 
