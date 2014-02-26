@@ -66,8 +66,8 @@ public class Player : MonoBehaviour
 		
 		PosStart = transform.position;
 		PosEnd = transform.position;
-		PosStart.y -= boxCollider.size.y * transform.localScale.y * 0.8f;
-		PosEnd.y -= boxCollider.size.y * transform.localScale.y * 0.55f;
+		PosStart.y -= boxCollider.size.y * transform.localScale.y * 0.75f;
+		PosEnd.y -= boxCollider.size.y * transform.localScale.y * 0.6f;
 		
 		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
 		Debug.DrawLine (PosStart, PosEnd, Color.red);
