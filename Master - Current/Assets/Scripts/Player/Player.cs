@@ -5,11 +5,14 @@ public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
+	public bool facingLeft = true;
 	public static bool swimming = false, dead = false;
 	public Vector2 PosStart, PosEnd;
 	public static float originalDrag, originalGravity;
 	private static Vector2 startPos;
 	private static CameraFade cam;
+	
+	Animator anim;
 	
 	// Reset the player to his original position
 	public static void Reset(Rigidbody2D body) 
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
 	void Start ()
 	{
 		cam = GetComponent<CameraFade> ();
+		anim = GetComponent<Animator>();
 		startPos = rigidbody2D.transform.position;
 		rigidbody2D.drag = 2;
 		rigidbody2D.mass = 10;
@@ -154,6 +158,44 @@ public class Player : MonoBehaviour
 		else
 			Physics2D.IgnoreLayerCollision(10, 9, true);
 		
+	}
+	
+	
+	void FixedUpdate()
+	{
+		//This is going to need cleaned up so so much.
+
+		anim.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
+
+		if (Input.GetButtonDown("Jump"))
+		{
+			anim.SetBool(("Jump"), true);
+		}
+		
+		if (Input.GetButtonDown("Fire1"))
+		{
+			//anim.SetBool(("Action"), true);
+			anim.Play("DeerRam");
+			
+		}
+
+		if(grounded)
+		{
+			anim.SetBool(("Jump"), false);
+		}
+
+		if (Input.GetAxisRaw ("Horizontal") < 0 && facingLeft)
+				Flip ();
+		else if (Input.GetAxisRaw ("Horizontal") > 0 && !facingLeft)
+				Flip ();	
+	}
+
+	void Flip()
+	{
+		facingLeft = !facingLeft;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 	
 	
