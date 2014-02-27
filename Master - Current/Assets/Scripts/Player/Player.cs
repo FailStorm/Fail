@@ -6,11 +6,13 @@ public class Player : MonoBehaviour
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
 	public bool facingLeft = true;
-	public static bool swimming = false, dead = false;
+	public static bool swimming = false, dead = false, ramStatus = false;
 	public Vector2 PosStart, PosEnd;
 	public static float originalDrag, originalGravity;
 	private static Vector2 startPos;
 	private static CameraFade cam;
+	private static LayerMask mask = ~(1 << 10);
+		//~(1 << 10);
 	
 	Animator anim;
 	
@@ -99,7 +101,7 @@ public class Player : MonoBehaviour
 		PosStart.y -= boxCollider.size.y * transform.localScale.y * 0.8f;
 		PosEnd.y -= boxCollider.size.y * transform.localScale.y * 0.55f;
 		
-		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd);
+		RaycastHit2D hit = Physics2D.Linecast(PosStart, PosEnd, mask);
 		Debug.DrawLine (PosStart, PosEnd, Color.red);
 		
 		if (hit.collider)
@@ -113,8 +115,8 @@ public class Player : MonoBehaviour
 		PosStart.x -= boxCollider.size.x * transform.localScale.x * 0.5f;
 		PosEnd.x -= boxCollider.size.x * transform.localScale.x * 0.5f;
 		
-		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd);
-		Debug.DrawLine (PosStart, PosEnd, Color.red);
+		RaycastHit2D hit2 = Physics2D.Linecast(PosStart, PosEnd, mask);
+		Debug.DrawLine (PosStart, PosEnd, Color.blue);
 		
 		if (hit2.collider)
 		{
@@ -128,8 +130,8 @@ public class Player : MonoBehaviour
 		PosStart.x += boxCollider.size.x * transform.localScale.x;
 		PosEnd.x += boxCollider.size.x * transform.localScale.x;
 		
-		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd);
-		Debug.DrawLine (PosStart, PosEnd, Color.red);
+		RaycastHit2D hit3 = Physics2D.Linecast(PosStart, PosEnd, mask);
+		Debug.DrawLine (PosStart, PosEnd, Color.green);
 		
 		if (hit3.collider)
 		{
@@ -138,26 +140,11 @@ public class Player : MonoBehaviour
 			
 			grounded = true;
 		}
-		/*
-		//Check if the rays collided
-		if (hit.collider)
-		{
-					
-		}
-		if (hit2.collider)
-		{
-			grounded = true;			
-		}
-		if (hit3.collider)
-		{
-			grounded = true;		
-		}
-			*/
+
 		if(collision)
 			Physics2D.IgnoreLayerCollision(10, 9, false);
 		else
-			Physics2D.IgnoreLayerCollision(10, 9, true);
-		
+			Physics2D.IgnoreLayerCollision(10, 9, true);		
 	}
 	
 	
@@ -167,26 +154,34 @@ public class Player : MonoBehaviour
 
 		anim.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
 
+
 		if (Input.GetButtonDown("Jump"))
 		{
-			anim.SetBool(("Jump"), true);
+			if(grounded)
+				anim.SetBool(("Jump"), true);
 		}
+		else
+			anim.SetBool(("Jump"), false);
 		
 		if (Input.GetButtonDown("Fire1"))
 		{
 			//anim.SetBool(("Action"), true);
 			anim.Play("DeerRam");
-			
+			ramStatus = true;
 		}
-
+		else
+			ramStatus = false;
+		/*
 		if(grounded)
 		{
-			anim.SetBool(("Jump"), false);
+			//anim.SetBool(("Jump"), false);
 		}
-
-		if (Input.GetAxisRaw ("Horizontal") < 0 && facingLeft)
+		else
+			anim.SetBool(("Jump"), true);
+*/
+		if (Input.GetAxisRaw ("Horizontal") > 0 && facingLeft)
 				Flip ();
-		else if (Input.GetAxisRaw ("Horizontal") > 0 && !facingLeft)
+		else if (Input.GetAxisRaw ("Horizontal") < 0 && !facingLeft)
 				Flip ();	
 	}
 
@@ -210,7 +205,12 @@ public class Player : MonoBehaviour
 	{
 		return form;
 	}
-	
+
+	// Get the current form
+	public static bool GetRam()
+	{
+		return ramStatus;
+	}
 	
 	public static void SetSwimming(bool a) 
 	{

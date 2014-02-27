@@ -19,7 +19,7 @@ public class PlayerLand : MonoBehaviour
 			if(Time.timeScale != 0)
 				movement.y = ySpeed * 20000;
 		}
-		
+		/*
 		//Reduce movement speed when in mid air
 		if (!grounded){
 			xSpeed = 20;
@@ -27,7 +27,7 @@ public class PlayerLand : MonoBehaviour
 		else
 		{
 			xSpeed = 40;
-		}
+		}*/
 		
 		// Add forces		
 		if (movement.x != 0 && body.velocity.x <= 15 && body.velocity.x >= -15)
