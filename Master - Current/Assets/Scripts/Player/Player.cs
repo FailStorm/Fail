@@ -192,8 +192,15 @@ public class Player : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-	
-	
+	/*
+	void OnCollisionEnter2D(Collider2D other)
+	{
+		if (other.gameObject.collider2D.name == "Apple") 
+		{
+			other.rigidbody2D.gravityScale = 5;
+		}
+	}
+	*/
 	// Change form
 	public static void SetForm(int a) 
 	{

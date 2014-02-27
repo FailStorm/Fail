@@ -8,14 +8,14 @@ public class SpikeTrigger : MonoBehaviour
 		// Triggers if collides with the player
 		if (other.gameObject.collider2D.name == "Player")
 		{
-			if (this.gameObject.name == "SpikeLand")
+			if (this.gameObject.name == "LandDeath")
 			{
 				other.rigidbody2D.mass = 200;
 				other.rigidbody2D.gravityScale = 10;
 				other.rigidbody2D.drag = 0;
 				Player.SetForm(1);
 			}
-			else if (this.gameObject.name == "SpikeWater")
+			else if (this.gameObject.name == "WaterDeath")
 			{
 				other.rigidbody2D.mass = 10;
 				other.rigidbody2D.gravityScale = 5;
@@ -25,7 +25,7 @@ public class SpikeTrigger : MonoBehaviour
 				
 				Player.SetForm(2);				
 			}
-			else if (this.gameObject.name == "SpikeAir")
+			else if (this.gameObject.name == "AirDeath")
 			{
 				other.rigidbody2D.mass = 10;
 				other.rigidbody2D.gravityScale = 5;

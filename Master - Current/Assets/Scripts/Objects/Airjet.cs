@@ -11,7 +11,7 @@ public class Airjet : MonoBehaviour
 		{
 			if (this.gameObject.name == "AirJet")
 			{
-				other.gameObject.rigidbody2D.AddForce(new Vector2(0, 300000000 * Time.deltaTime));
+				other.gameObject.rigidbody2D.AddForce(new Vector2(0, 30000000 * Time.deltaTime));
 			}
 		}
 	}
