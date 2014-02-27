@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
 			break;
 			case 1:		// Land
 			PlayerLand.Move(rigidbody2D, grounded);
+			anim.SetBool("isDeer", true);  
 			break;
 			case 2:		// Water
 			if (swimming)
@@ -153,7 +154,14 @@ public class Player : MonoBehaviour
 		//This is going to need cleaned up so so much.
 
 		anim.SetFloat("Speed", Mathf.Abs(rigidbody2D.velocity.x));
+		
+		anim.SetFloat("YSpeed", Mathf.Abs(rigidbody2D.velocity.y));
 
+		if (grounded) 
+		{
+			anim.SetBool (("anim_grounded"), true);		
+		} else
+			anim.SetBool (("anim_grounded"), false);
 
 		if (Input.GetButtonDown("Jump"))
 		{
@@ -163,6 +171,9 @@ public class Player : MonoBehaviour
 		else
 			anim.SetBool(("Jump"), false);
 		
+		if (anim.GetBool("isDeer") == true)
+		{
+		
 		if (Input.GetButtonDown("Fire1"))
 		{
 			//anim.SetBool(("Action"), true);
@@ -171,6 +182,8 @@ public class Player : MonoBehaviour
 		}
 		else
 			ramStatus = false;
+			
+		}
 		/*
 		if(grounded)
 		{
@@ -192,15 +205,8 @@ public class Player : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-	/*
-	void OnCollisionEnter2D(Collider2D other)
-	{
-		if (other.gameObject.collider2D.name == "Apple") 
-		{
-			other.rigidbody2D.gravityScale = 5;
-		}
-	}
-	*/
+	
+	
 	// Change form
 	public static void SetForm(int a) 
 	{
