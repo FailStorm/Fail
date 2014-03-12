@@ -41,6 +41,18 @@ public class Player : MonoBehaviour
 		cam.StartFade (new Color(0,0,0,0), 0.5f);
 	}
 	
+	//Gary 
+	public static void PlaceInWorld(Rigidbody2D body, int xPos, int yPos)
+	{	
+		Vector2 temp;
+		temp = new Vector2 (xPos, yPos);
+		//temp.x = xPos;
+		//temp.y = yPos;
+		body.transform.Translate(temp);
+		body.gravityScale = originalGravity;
+		cam.StartFade (new Color(0,0,0,0), 0.5f);
+	}
+	
 	// Use this for initialization
 	void Start ()
 	{
