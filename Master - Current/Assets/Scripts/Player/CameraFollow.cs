@@ -9,6 +9,8 @@ public class CameraFollow : MonoBehaviour
 	public Vector2 maxXAndY;		// The maximum x and y coordinates the camera can have.
 	public Vector2 minXAndY;		// The minimum x and y coordinates the camera can have.
 	private Transform player;		// Reference to the player's transform.
+	public bool cameraLock = true;
+
 	void Awake ()
 	{
 		// Setting up the reference.
@@ -26,7 +28,16 @@ public class CameraFollow : MonoBehaviour
 	}
 	void FixedUpdate ()
 	{
-		TrackPlayer();
+	
+		if (Input.GetButtonDown("Fire1"))
+		{
+			cameraLock = false;
+		}
+	
+		if (!cameraLock) 
+		{
+			TrackPlayer ();
+		}
 	}
 	
 	
