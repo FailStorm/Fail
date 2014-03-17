@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
-	public bool facingLeft = true;
+	public static bool facingLeft = true;
 	public static bool swimming = false, dead = false, ramStatus = false;
 	public Vector2 PosStart, PosEnd;
 	public static float originalDrag, originalGravity;
@@ -246,5 +246,10 @@ public class Player : MonoBehaviour
 	public static bool GetSwimming()
 	{
 		return swimming;
+	}
+
+	public static bool GetFacingLeft()
+	{
+		return facingLeft;
 	}
 }
