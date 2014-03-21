@@ -9,7 +9,8 @@ public class CameraFollow : MonoBehaviour
 	public Vector2 maxXAndY;		// The maximum x and y coordinates the camera can have.
 	public Vector2 minXAndY;		// The minimum x and y coordinates the camera can have.
 	private Transform player;		// Reference to the player's transform.
-	public bool cameraLock = true;
+	public static bool cameraLock = true;
+	bool CamLock;
 
 	void Awake ()
 	{
@@ -26,20 +27,21 @@ public class CameraFollow : MonoBehaviour
 		// Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
 		return Mathf.Abs(transform.position.y - player.position.y) > yMargin;
 	}
+	
 	void FixedUpdate ()
 	{
-	
-		if (Input.GetButtonDown("Fire1"))
-		{
-			cameraLock = false;
-		}
-	
-		if (!cameraLock) 
+		setCameraLock();
+		
+		if (!CamLock) 
 		{
 			TrackPlayer ();
 		}
 	}
 	
+	void setCameraLock()
+	{
+		CamLock = (GameObject.Find("Player").GetComponent<Player>().isCamLocked());
+	}
 	
 	void TrackPlayer ()
 	{

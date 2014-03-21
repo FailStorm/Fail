@@ -5,9 +5,13 @@ public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
-	public static bool facingLeft = true;
+
+	bool CamLock = true;
+	public static bool facingLeft = true, start = false;
+
 	public static bool swimming = false, dead = false, ramStatus = false;
 	public Vector2 PosStart, PosEnd;
+	public static Vector2 SpawnPos;
 	public static float originalDrag, originalGravity;
 	private static Vector2 startPos;
 	private static CameraFade cam;
@@ -44,15 +48,34 @@ public class Player : MonoBehaviour
 	//Gary 
 	public static void PlaceInWorld(Rigidbody2D body, int xPos, int yPos)
 	{	
-		Vector2 temp;
-		temp = new Vector2 (xPos, yPos);
-		//temp.x = xPos;
-		//temp.y = yPos;
-		body.transform.Translate(temp);
-		body.gravityScale = originalGravity;
-		cam.StartFade (new Color(0,0,0,0), 0.5f);
+		cam.StartFade (new Color(0,0,0,1), 1f);
+		SpawnPos.x = xPos;
+		SpawnPos.y = yPos;
 	}
 	
+	public static void FadeToPosition(Rigidbody2D body, int xPos, int yPos)
+	{
+		Vector2 temp;
+		temp = new Vector2 (xPos, yPos);
+		body.transform.Translate(temp);
+		body.gravityScale = originalGravity;
+		cam.StartFade (new Color(0,0,0,0), 1f);
+	}
+	
+	
+	public static void fadeInorOut()
+	{
+		if (cam.GetTrans () == 1)
+		{
+			
+		}
+
+		if (cam.GetTrans () == 0) 
+		{
+			
+		}
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -62,14 +85,28 @@ public class Player : MonoBehaviour
 		rigidbody2D.drag = 2;
 		rigidbody2D.mass = 10;
 		rigidbody2D.gravityScale = 2;
+		
+	}
+	
+	public bool isCamLocked()
+	{
+		return CamLock;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if(dead)
+		if (dead)
+		{
 			if (cam.GetTrans () == 1)
-				ResetPos (rigidbody2D);
+			ResetPos(rigidbody2D);
+		}
+		else
+			if (cam.GetTrans () == 1)
+			{
+				FadeToPosition(rigidbody2D, (int)SpawnPos.x, (int)SpawnPos.y);
+				CamLock = false;
+			}
 		
 		bool collision = false;
 		// Update based on which state the player is in

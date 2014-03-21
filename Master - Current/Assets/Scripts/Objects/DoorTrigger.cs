@@ -5,6 +5,8 @@ public class DoorTrigger : MonoBehaviour
 {
 
 	CameraFade cam;
+	CameraFollow followcam;
+
 
 	void OnTriggerStay2D(Collider2D other)
 	{
@@ -18,9 +20,6 @@ public class DoorTrigger : MonoBehaviour
 					if (this.gameObject.name == "Door1") 
 					{
 						Player.PlaceInWorld(other.rigidbody2D, -200, 10);
-						//if (cam.GetTrans () == 1)
-						//	Player.ResetPos (rigidbody2D);
-						cam.StartFade (new Color(0,0,0,1), 1.0f);
 					}
 
 					if (this.gameObject.name == "Door2") 
