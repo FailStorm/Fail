@@ -19,6 +19,13 @@ public class PlayerLand : MonoBehaviour
 			if(Time.timeScale != 0)
 				movement.y = ySpeed * 20000;
 		}
+
+		if (Input.GetButtonDown ("Jump") && Player.GetSwimming ()) 
+		{
+			if(Time.timeScale != 0)
+				movement.y = ySpeed * 10000;
+		}
+
 		/*
 		//Reduce movement speed when in mid air
 		if (!grounded){

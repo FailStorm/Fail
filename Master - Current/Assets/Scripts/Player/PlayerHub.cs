@@ -30,6 +30,7 @@ public class PlayerHub : MonoBehaviour
 		}
 		
 		//Reduce movement speed when in mid air
+		/*
 		if (!grounded){
 			hub.xSpeed = 20;
 		}
@@ -37,7 +38,7 @@ public class PlayerHub : MonoBehaviour
 		{
 			hub.xSpeed = 30;
 		}
-		
+		*/
 		
 		// Add forces		
 		if (movement.x != 0 && body.velocity.x <= 20 && body.velocity.x >= -20)

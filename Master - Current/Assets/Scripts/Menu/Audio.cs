@@ -21,6 +21,10 @@ public class Audio : MonoBehaviour {
 			PlayNextSong ();
 		}
 	}
+	void LoadSound(string directory)
+	{
+		sounds = Resources.LoadAll (directory, typeof(AudioClip));
+	}
 	
 	// Update is called once per frame
 	void Update () {

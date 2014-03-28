@@ -16,13 +16,14 @@ public class PlayerAir : MonoBehaviour
 		// Jumping
 		//if (grounded) // If jump is pressed and the player is not falling / rising...
 		// If jump is pressed and the player is not falling / rising...
-		if (Input.GetButtonDown ("Jump"))
+		if (Input.GetButtonDown ("Jump") && grounded)
 		{
 			/*if (Input.GetButtonDown ("Jump"))
 			{
 				movement.y = ySpeed;
 			}*/
-			movement.y = ySpeed * 500;
+			if(Time.timeScale != 0)
+				movement.y = ySpeed * 500;
 		}/*
 		else
 		{
@@ -39,16 +40,23 @@ public class PlayerAir : MonoBehaviour
 				body.AddForce(new Vector2(0, 500));
 			}
 		}*/
-		if (!Player.swimming)
-			//Gliding
-			if (!grounded)
+		if (!Player.GetSwimming ()) 
 		{
-			if(body.velocity.y <= -3 && Input.GetButton ("Jump"))
+			//Gliding
+			if (!grounded) 
 			{
-				//body.drag = 5;
-				body.AddForce(new Vector2(0, 500));
+				if (body.velocity.y <= -3 && Input.GetButton ("Jump")) 
+				{
+					//body.drag = 5;
+					body.AddForce (new Vector2 (0, 500));
+				}
 			}
-		}
+		} 
+		else 
+			if(Input.GetButtonDown ("Jump"))
+				if(Time.timeScale != 0)
+					movement.y = ySpeed * 250;
+
 		
 		
 		// Add forces		

@@ -3,10 +3,7 @@ using System.Collections;
 
 public class DoorTrigger : MonoBehaviour 
 {
-
 	CameraFade cam;
-	CameraFollow followcam;
-
 
 	void OnTriggerStay2D(Collider2D other)
 	{
@@ -19,7 +16,9 @@ public class DoorTrigger : MonoBehaviour
 				{
 					if (this.gameObject.name == "Door1") 
 					{
-						Player.PlaceInWorld(other.rigidbody2D, -200, 10);
+						Player.SetCheckpoint(1);
+						Player.Reset(other.rigidbody2D);
+						Player.dead = false;
 					}
 
 					if (this.gameObject.name == "Door2") 

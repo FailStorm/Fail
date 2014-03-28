@@ -5,6 +5,7 @@ public class GameMenu : MonoBehaviour {
 
 	public float volumeLevel = 1.0f, menuLower = 0.01f;
 	bool paused = false, settings = false;
+	private static CameraFade cam;
 
 	//Object[] sounds;
 
@@ -22,12 +23,14 @@ public class GameMenu : MonoBehaviour {
 				Time.timeScale = 0;
 				paused = true;
 				Pause ();
+				
 			} 
 			else 
 			{
 				Time.timeScale = 1;
 				paused = false;
 				settings = false;
+				
 			}
 		}
 		//sound[0] = (AudioClip)Resources.Load("Audio (Final)/General Ambience/Land/Land_Level_General_Ambience_01", typeof(AudioClip));

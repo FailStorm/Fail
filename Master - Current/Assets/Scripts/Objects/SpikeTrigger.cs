@@ -18,7 +18,7 @@ public class SpikeTrigger : MonoBehaviour
 			else if (this.gameObject.name == "WaterDeath")
 			{
 				other.rigidbody2D.mass = 10;
-				other.rigidbody2D.gravityScale = 5;
+				other.rigidbody2D.gravityScale = 10;
 				other.rigidbody2D.drag = 2;
 				Player.originalDrag = other.rigidbody2D.drag;
 				Player.originalGravity = other.rigidbody2D.gravityScale;

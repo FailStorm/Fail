@@ -6,17 +6,23 @@ public class Menu : MonoBehaviour {
 	public GUIStyle PlayStyle, AboutStyle, CreditsStyle, SettingsStyle;
 	public float volumeLevel = 10.0f;
 	bool settings = false;
+	
+	GameObject waveyLines;
+	
+	void Start()
+	{
+		waveyLines = GameObject.Find("WaveyLines");
+	}
 
-	void OnGUI(){
-
+	void OnGUI()
+	{
 		
-
+		/*
 		//BeginArea(Rect screenRect, GUIStyle style);
-
 		GUILayout.BeginArea (new Rect (210, 225, 100, 100));
 		if (GUILayout.Button ("", PlayStyle)) 
 		{
-			Application.LoadLevel(1);
+			Application.LoadLevel(2);
 			Time.timeScale = 1;
 		}
 		GUILayout.EndArea ();
@@ -38,7 +44,7 @@ public class Menu : MonoBehaviour {
 		{
 			settings = true;
 		}
-		GUILayout.EndArea ();
+		GUILayout.EndArea ();*/
 
 		if (settings)
 		{
@@ -51,7 +57,51 @@ public class Menu : MonoBehaviour {
 			
 			//audio.volume = volumeLevel *0.2; Doesn't go in here btw
 		}
-
-
+	}
+	
+	void OnMouseOver()
+	{
+		if (this.gameObject.name == "play") 
+		{
+			Debug.Log ("Hover Play");
+//			GameObject lineInstance = Instantiate(WaveyLines, transform.position, transform.rotation) as GameObject;
+		}
+		
+		if (this.gameObject.name == "settings") 
+		{	
+		}
+		
+		if (this.gameObject.name == "about") 
+		{	
+		}
+		
+		if (this.gameObject.name == "credits") 
+		{	
+		}
+	}
+	
+	void OnMouseDown()
+	{	
+		if (this.gameObject.name == "play") 
+		{
+			Application.LoadLevel(2);
+			Time.timeScale = 1;
+			Debug.Log("MouseOver");
+		}
+		
+		if (this.gameObject.name == "settings") 
+		{
+			Debug.Log("Mouse");
+		}
+		
+		if (this.gameObject.name == "about") 
+		{
+			
+		}
+		
+		if (this.gameObject.name == "credits") 
+		{
+			
+		}
 	}
 }

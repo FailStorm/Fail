@@ -5,19 +5,20 @@ public class Player : MonoBehaviour
 {
 	public static int form = 0;	// Which state the player is in
 	public bool grounded;
-
 	bool CamLock = true;
 	public static bool facingLeft = true, start = false;
-
-	public static bool swimming = false, dead = false, ramStatus = false;
+	public static bool swimming = false, dead = false, ramStatus = false, pickUp = false;
 	public Vector2 PosStart, PosEnd;
 	public static Vector2 SpawnPos;
 	public static float originalDrag, originalGravity;
 	private static Vector2 startPos;
 	private static CameraFade cam;
-	private static LayerMask mask = ~(1 << 10);
-		//~(1 << 10);
+	private static LayerMask mask = ~(3 << 10);
 	
+		// Checkpoint stuff
+	private static Vector2[] checkpointArray;
+	private static int lastCheckpoint = 0;
+		
 	Animator anim;
 	
 	// Reset the player to his original position
@@ -38,8 +39,8 @@ public class Player : MonoBehaviour
 		temp = body.transform.position;
 		temp.x = -temp.x;
 		temp.y = -temp.y;
-		temp.x += startPos.x;
-		temp.y += startPos.y;
+		temp.x += checkpointArray[lastCheckpoint].x;
+		temp.y += checkpointArray[lastCheckpoint].y;
 		body.transform.Translate(temp);
 		body.gravityScale = originalGravity;
 		cam.StartFade (new Color(0,0,0,0), 0.5f);
@@ -86,6 +87,14 @@ public class Player : MonoBehaviour
 		rigidbody2D.mass = 10;
 		rigidbody2D.gravityScale = 2;
 		
+		
+		checkpointArray = new Vector2[]
+		{
+			new Vector2(180, 7),
+			new Vector2(-25, 0),
+			new Vector2(73, -11),
+			new Vector2(42, 20),
+		};
 	}
 	
 	public bool isCamLocked()
@@ -96,6 +105,7 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+
 		if (dead)
 		{
 			if (cam.GetTrans () == 1)
@@ -104,7 +114,7 @@ public class Player : MonoBehaviour
 		else
 			if (cam.GetTrans () == 1)
 			{
-				FadeToPosition(rigidbody2D, (int)SpawnPos.x, (int)SpawnPos.y);
+				ResetPos(rigidbody2D);
 				CamLock = false;
 			}
 		
@@ -122,16 +132,7 @@ public class Player : MonoBehaviour
 			anim.SetBool("isDeer", true);  
 			break;
 			case 2:		// Water
-			if (swimming)
-			{
-				// If in water, swim
-				PlayerWater.Move(rigidbody2D);
-			}
-			else
-			{
-				// If not in water, use default movement
-				PlayerHub.Move(rigidbody2D, grounded);				
-			}
+			PlayerWater.Move(rigidbody2D, swimming, grounded);
 			break;
 			case 3:		// Air
 			PlayerAir.Move(rigidbody2D, grounded);
@@ -191,6 +192,11 @@ public class Player : MonoBehaviour
 			grounded = true;
 		}
 
+		if (grounded)
+			if(hit.collider)
+				if (hit.collider.gameObject.layer == 4)
+					grounded = false;
+		
 		if(collision)
 			Physics2D.IgnoreLayerCollision(10, 9, false);
 		else
@@ -206,6 +212,11 @@ public class Player : MonoBehaviour
 		
 		anim.SetFloat("YSpeed", Mathf.Abs(rigidbody2D.velocity.y));
 
+		if(swimming)
+			anim.SetBool (("Water"), true);		
+		else
+			anim.SetBool (("Water"), false);	
+		
 		if (grounded) 
 		{
 			anim.SetBool (("anim_grounded"), true);		
@@ -288,5 +299,10 @@ public class Player : MonoBehaviour
 	public static bool GetFacingLeft()
 	{
 		return facingLeft;
+	}
+	
+	public static void SetCheckpoint(int a)
+	{
+		lastCheckpoint = a;
 	}
 }
