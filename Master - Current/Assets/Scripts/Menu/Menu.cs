@@ -2,50 +2,26 @@
 using System.Collections;
 
 public class Menu : MonoBehaviour {
-	
-	public GUIStyle PlayStyle, AboutStyle, CreditsStyle, SettingsStyle;
+
+	public GameObject waveyLines, startButton, settingsButton, creditsButton, aboutButton;
 	public float volumeLevel = 10.0f;
 	bool settings = false;
-	
-	GameObject waveyLines;
+	bool menuActive = true;
+	int menuAlpha = 0;
+	bool mouseUp;
 	
 	void Start()
 	{
 		waveyLines = GameObject.Find("WaveyLines");
+		startButton = GameObject.Find ("play");
+		settingsButton = GameObject.Find ("settings");
+		creditsButton = GameObject.Find ("credits");
+		aboutButton = GameObject.Find ("about");
+		waveyLines.GetComponent<SpriteRenderer>().color = new Color (0, 0, 0, 0);
 	}
 
 	void OnGUI()
 	{
-		
-		/*
-		//BeginArea(Rect screenRect, GUIStyle style);
-		GUILayout.BeginArea (new Rect (210, 225, 100, 100));
-		if (GUILayout.Button ("", PlayStyle)) 
-		{
-			Application.LoadLevel(2);
-			Time.timeScale = 1;
-		}
-		GUILayout.EndArea ();
-
-		GUILayout.BeginArea (new Rect (285, 175, 100, 100));
-		if (GUILayout.Button ("", AboutStyle)) 
-		{
-		}
-		GUILayout.EndArea ();
-
-		GUILayout.BeginArea (new Rect (380, 180, 100, 100));
-		if (GUILayout.Button ("", CreditsStyle)) 
-		{
-		}
-		GUILayout.EndArea ();
-
-		GUILayout.BeginArea (new Rect (170, 320, 100, 100));
-		if (GUILayout.Button ("", SettingsStyle)) 
-		{
-			settings = true;
-		}
-		GUILayout.EndArea ();*/
-
 		if (settings)
 		{
 			volumeLevel = GUI.HorizontalSlider(new Rect(25, 25, 100, 30), volumeLevel, 10.0F, 20.0F);
@@ -54,54 +30,160 @@ public class Menu : MonoBehaviour {
 			{
 				settings = false;
 			}
-			
-			//audio.volume = volumeLevel *0.2; Doesn't go in here btw
 		}
 	}
-	
+
+	void OnMouseExit()
+	{
+		if (menuActive)
+		{
+			if (this.gameObject.name == "play") 
+			{
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (0, 0, 0, 0); 
+				WaveyLines.StopLines();	
+			}
+			
+			if (this.gameObject.name == "settings") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (0, 0, 0, 0); 
+				WaveyLines.StopLines();
+			}
+			
+			//
+			if (this.gameObject.name == "about") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (0, 0, 0, 0);
+				WaveyLines.StopLines();
+			}
+			
+			if (this.gameObject.name == "credits") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (0, 0, 0, 0);
+				WaveyLines.StopLines();
+			}
+		}
+	}
+
 	void OnMouseOver()
 	{
-		if (this.gameObject.name == "play") 
+		Debug.Log("oiner");
+		if (menuActive)
 		{
-			Debug.Log ("Hover Play");
-//			GameObject lineInstance = Instantiate(WaveyLines, transform.position, transform.rotation) as GameObject;
-		}
-		
-		if (this.gameObject.name == "settings") 
-		{	
-		}
-		
-		if (this.gameObject.name == "about") 
-		{	
-		}
-		
-		if (this.gameObject.name == "credits") 
-		{	
+			if (this.gameObject.name == "play")
+			{
+				Debug.Log("oiner");
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (255, 255, 255, 255);
+				WaveyLines.PlayLines();
+			}
+			
+			if (this.gameObject.name == "settings") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (255, 255, 255, 255);
+				WaveyLines.PlayLines();
+			}
+			
+			//
+			if (this.gameObject.name == "about") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (255, 255, 255, 255);
+				WaveyLines.PlayLines(); 
+			}
+			
+			if (this.gameObject.name == "credits") 
+			{	
+				waveyLines.GetComponent<SpriteRenderer>().color = new Color (255, 255, 255, 255);
+				WaveyLines.PlayLines();
+			}
 		}
 	}
 	
-	void OnMouseDown()
-	{	
-		if (this.gameObject.name == "play") 
+	void OnMouseUp()
+	{
+	 	if (menuActive)
 		{
-			Application.LoadLevel(2);
-			Time.timeScale = 1;
-			Debug.Log("MouseOver");
-		}
-		
-		if (this.gameObject.name == "settings") 
-		{
-			Debug.Log("Mouse");
-		}
-		
-		if (this.gameObject.name == "about") 
-		{
+			Debug.Log("Button");
+			/*if (startButton.GetMouseUp())
+			{
+				//do stuff
+				startButton.SetMouseUp();
+			}*/
 			
-		}
-		
-		if (this.gameObject.name == "credits") 
-		{
+			if (this.gameObject.name == "play") 
+			{
+				Application.LoadLevel(2);
+				Time.timeScale = 1;
+			}
 			
+			if (this.gameObject.name == "settings") 
+			{
+			}
+			
+			//
+			if (this.gameObject.name == "about") 
+			{
+				About ();
+				HideMenu ();
+				SetMenuState (false);
+			}
+			
+			if (this.gameObject.name == "credits") 
+			{
+				Credits ();
+				HideMenu ();
+				SetMenuState (false);
+			}			
+		}
+			
+		if (this.gameObject.name == "CreditsPage(Clone)") 
+		{
+			Destroy(GameObject.Find("CreditsPage(Clone)"));
+			ShowMenu();
+			SetMenuState (true);
+		}
+
+		if (this.gameObject.name == "aboutpage(Clone)") 
+		{
+			Destroy(GameObject.Find("aboutpage(Clone)"));
+			ShowMenu();
+			SetMenuState (true);
 		}
 	}
+
+	void About()
+	{
+		GameObject aboutInstance = Instantiate(Resources.Load("aboutpage")) as GameObject;
+		aboutInstance.GetComponent<SpriteRenderer>().sortingOrder = 2;
+	}
+
+	void Credits()
+	{
+		GameObject creditInstance = Instantiate(Resources.Load("CreditsPage")) as GameObject;
+		creditInstance.GetComponent<SpriteRenderer>().sortingOrder = 2;
+	}
+
+	void SetMenuState(bool x)
+	{
+		menuActive = x;
+	}
+
+	void HideMenu()
+	{
+		startButton.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 0);
+		settingsButton.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 0);
+		aboutButton.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 0);
+		creditsButton.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 0, 0);
+		
+		SetMenuState(false);
+	}
+	
+	void ShowMenu()
+	{
+		startButton.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		settingsButton.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		aboutButton.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		creditsButton.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 255);
+		
+		SetMenuState (true);
+	}
+	
 }

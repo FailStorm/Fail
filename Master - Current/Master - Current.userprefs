@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Menu\WaveyLines.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\SettingButtonScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\Menu\Menu.cs" Line="89" Column="27" />
-      <File FileName="Assets\Scripts\Menu\WaveyLines.cs" Line="6" Column="19" />
+      <File FileName="Assets\Scripts\Menu\AboutScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Menu\CreditsScript.cs" Line="31" Column="3" />
+      <File FileName="Assets\Scripts\Menu\PlayScript.cs" Line="31" Column="3" />
+      <File FileName="Assets\Scripts\Player\SettingButtonScript.cs" Line="18" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

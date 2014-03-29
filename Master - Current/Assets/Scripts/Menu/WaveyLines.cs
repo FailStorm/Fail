@@ -1,43 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//LookAt
 public class WaveyLines : MonoBehaviour {
-
+	
+	float angle;
+	Vector3 mouse_pos;
+	Vector3 object_pos;
+	Quaternion newRotation;
 	Vector3 mousePos;
 
+	public static bool testbool = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	/*void Update()
+	public static Animator lineAnim;
+
+	void Start()
 	{
-		Vector3 mousePos = Input.mousePosition;
-		
-		mousePos.z = -(transform.position.x - Camera.main.transform.position.x);
-		
-		Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-		
-		transform.LookAt(mousePos);
-	}*/
-	
-	void Update () {
-		
-		
-		
-		mousePos = Input.mousePosition;            
-		
-		mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-		
-		//transform.LookAt(new Vector3(mousePosition.x, mousePosition.y, transform.position.x)); 
-		
-		Quaternion rot = Quaternion.LookRotation(transform.position - mousePos, Vector3.forward );
-		
-		transform.rotation = rot;   
-		
-		transform.eulerAngles = new Vector3(0, 0,transform.eulerAngles.z); 
-		
+		lineAnim = GetComponent<Animator> ();
+	}
+
+
+	void Update ()
+	{
+		mouse_pos = Input.mousePosition;
+		mouse_pos.z = 10; //The distance between the camera and object
+		object_pos = Camera.main.WorldToScreenPoint(this.transform.position);
+		mouse_pos.x = -mouse_pos.x + object_pos.x;
+		mouse_pos.y = -mouse_pos.y + object_pos.y;
+		angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
+		newRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		transform.rotation = newRotation;
+	}
+
+
+
+	public static void PlayLines()
+	{
+		lineAnim.SetBool("active", true); 
+	}
+
+	public static void StopLines()
+	{
+		lineAnim.SetBool("active", false); 
 	}
 }

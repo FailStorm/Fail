@@ -244,14 +244,7 @@ public class Player : MonoBehaviour
 			ramStatus = false;
 			
 		}
-		/*
-		if(grounded)
-		{
-			//anim.SetBool(("Jump"), false);
-		}
-		else
-			anim.SetBool(("Jump"), true);
-*/
+
 		if (Input.GetAxisRaw ("Horizontal") > 0 && facingLeft)
 				Flip ();
 		else if (Input.GetAxisRaw ("Horizontal") < 0 && !facingLeft)
